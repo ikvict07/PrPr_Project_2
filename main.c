@@ -27,10 +27,13 @@ typedef struct ModuleLinkedList {
     struct ModuleLinkedList* next;
 } ModuleLinkedList;
 
-
+/**
+@brief This function deletes a linked list.
+@param list is a pointer to the head of the linked list.
+@return void
+**/
 void deleteList(ModuleLinkedList** list) {
     ModuleLinkedList* current = *list;
-
 
     while (current != NULL) {
         ModuleLinkedList* next = current->next;
@@ -40,7 +43,14 @@ void deleteList(ModuleLinkedList** list) {
 
     *list = NULL;
 }
-
+/**
+@brief This function compares two timestamps.
+@param date1 is string with date from first module.
+@param date2 is string with date from second module.
+@param time1 is string with time from first module.
+@param time2 is string with time from second module.
+@return returns a positive integer if date1 + time1 is bigger than date2 + time2
+**/
 int compare(const char* date1, const char* time1, const char* date2, const char* time2) {
     int dateA, dateB;
     sscanf(date1, "%d", &dateA);
@@ -52,9 +62,13 @@ int compare(const char* date1, const char* time1, const char* date2, const char*
         sscanf(time2, "%d", &timeB);
         diff = timeA - timeB;
     }
-    return diff; // IF date1 is bigger => returns positive number
+    return diff;
 }
-
+/**
+@brief This function prints all modules in the ModuleLinkedList.
+@param list is a head of the linked list.
+@return void
+**/
 void case_v(ModuleLinkedList* list) {
     if (list == NULL) {
         printf("Zoznam je prazdny!\n");
@@ -75,6 +89,12 @@ void case_v(ModuleLinkedList* list) {
     // Logical AND is lazy in C, so it will not evaluate the second part if the first part is false.
 }
 
+/**
+@brief This function loads the modules from a file into a linked list.
+If list is not empty, it is deleted first.
+@param list is a pointer to the head of the linked list.
+@return void
+**/
 void case_n(ModuleLinkedList** list) {
     if (*list != NULL) {
         deleteList(list);
@@ -137,6 +157,12 @@ void case_n(ModuleLinkedList** list) {
     fclose(main_file);
 }
 
+/**
+@brief This function inserts a new module into the ModuleLinkedList at the specified position.
+If the position is invalid, the module is inserted at the end of the linked list.
+@param list is a pointer to the head of the linked list.
+@return void
+**/
 void case_p(ModuleLinkedList** list) {
     int insert_position;
     int const scanResult = scanf("%d", &insert_position);
@@ -164,7 +190,7 @@ void case_p(ModuleLinkedList** list) {
 
     if (designation < 'A' || designation > 'Z' || numbering < 100 || numbering > 999 ||
         type_id < 'a' || type_id > 'z' || value < 0 || value > 999.99) {
-        printf("Invalid input!\n"); // The task says we cannot print anything
+        //printf("Invalid input!\n"); // The task says we cannot print anything
         return;
     }
 
@@ -214,7 +240,13 @@ void case_p(ModuleLinkedList** list) {
         new_node->next = NULL;
     }
 }
-
+/**
+@brief This function removes a module with specific id from the ModuleLinkedList.
+If there are multiple modules with the same id, all of them are removed.
+Prints ID of module that was deleted.
+@param list is a pointer to the head of the linked list.
+@return void
+**/
 void case_z(ModuleLinkedList** list) {
     if (*list == NULL) {
         printf("Zoznam je prazdny!\n");
@@ -250,13 +282,21 @@ void case_z(ModuleLinkedList** list) {
         }
     }
 }
-
+/**
+@brief This function swaps the data of two modules.
+@param a, b are pointers to the modules that need to be swapped.
+@return void
+**/
 void swap(ModuleLinkedList* a, ModuleLinkedList* b) {
     const Module temp = a->module;
     a->module = b->module;
     b->module = temp;
 }
-
+/**
+@brief This function sorts the linked list by date using bubble sort.
+@param list is a pointer to the head of the linked list.
+@return void
+**/
 void bubbleSort(ModuleLinkedList** list) {
     int swapped;
 
@@ -282,7 +322,11 @@ void bubbleSort(ModuleLinkedList** list) {
     }
     while (swapped);
 }
-
+/**
+@brief This function sorts the linked list.
+@param list is a pointer to the head of the linked list.
+@return void
+**/
 void case_u(ModuleLinkedList** list) {
     if (*list == NULL) {
         printf("Chyba usporiadania!\n");
@@ -291,7 +335,12 @@ void case_u(ModuleLinkedList** list) {
     bubbleSort(list);
     printf("Spajany zoznam bol usporiadany\n");
 }
-
+/**
+@brief This function swaps the positions of two modules in the linked list.
+If the positions are invalid, nothing happens.
+@param list is a pointer to the head of the linked list.
+@return void
+**/
 void case_r(ModuleLinkedList** list) {
     ModuleLinkedList* first_node = *list;
     ModuleLinkedList* second_node = *list;
